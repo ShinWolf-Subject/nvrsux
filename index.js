@@ -199,7 +199,8 @@ app.get('/new', apiLimiter, createUrlLimiter, async (req, res) => {
       links: {
 	access: `${process.env.APP_DOMAIN}/r/${shortSlug}`,
 	delete: `${process.env.APP_DOMAIN}/delete.py?slug=${shortSlug}`,
-	stats: `${process.env.APP_DOMAIN}/stats/${shortSlug}`
+	stats: `${process.env.APP_DOMAIN}/stats/${shortSlug}`,
+        qrCode: `https://nvlabs.my.id/nv/canvas/qrgen?text=https%3A%2F%2Fnsu.my.id%2Fr%2F${shortSlug}&margin=1&size=400&format=png&color=%23000000&bgcolor=%23FFFFFF&`
       }
     });
     
