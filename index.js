@@ -90,9 +90,6 @@ const generateSlug = () => {
   return nanoid(slug);
 };
 
-// Contoh penggunaan
-console.log(generateSlug()); // bisa keluar 5, 6, 7, atau 8 karakter
-
 /*
 const generateSlug = () => {
   return nanoid(8);
@@ -114,7 +111,7 @@ app.get('/health', (req, res) => {
 });
 
 // Create Short URL - GET
-app.get('/create.js', apiLimiter, createUrlLimiter, async (req, res) => {
+app.get('/new', apiLimiter, createUrlLimiter, async (req, res) => {
   try {
     const { url, slug, title, desc } = req.query;
     
@@ -220,7 +217,7 @@ app.get('/create.js', apiLimiter, createUrlLimiter, async (req, res) => {
 });
 
 // Create Short URL - POST (optional)
-app.post('/create.js', apiLimiter, createUrlLimiter, async (req, res) => {
+app.post('/new', apiLimiter, createUrlLimiter, async (req, res) => {
   try {
     const { url, slug, title, description } = req.body;
     
@@ -354,7 +351,7 @@ app.get('/r/:slug', async (req, res) => {
 });
 
 // Delete URL
-app.get('/delete.html', apiLimiter, async (req, res) => {
+app.get('/delete.py', apiLimiter, async (req, res) => {
   try {
     const { slug } = req.query;
     
@@ -398,7 +395,7 @@ app.get('/delete.html', apiLimiter, async (req, res) => {
 });
 
 // Get All Links Data (Admin Only)
-app.get('/linksdata.json', apiLimiter, requireAdmin, async (req, res) => {
+app.get('/linksdata', apiLimiter, requireAdmin, async (req, res) => {
   try {
     const { 
       page = 1, 
