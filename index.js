@@ -104,6 +104,7 @@ app.get('/', (req, res) => {
 app.get('/health', (req, res) => {
   res.json({
     success: true,
+    creator: "Nv",
     message: 'URL Shortener API is running',
     timestamp: new Date().toISOString(),
     version: '1.0.0'
@@ -194,7 +195,7 @@ app.get('/new', apiLimiter, createUrlLimiter, async (req, res) => {
       },
       links: {
 	access: `${process.env.APP_DOMAIN}/r/${shortSlug}`,
-	delete: `${process.env.APP_DOMAIN}/delete.html?slug=${shortSlug}`,
+	delete: `${process.env.APP_DOMAIN}/delete.py?slug=${shortSlug}`,
 	stats: `${process.env.APP_DOMAIN}/stats/${shortSlug}`
       }
     });
@@ -549,10 +550,10 @@ const startServer = async () => {
       console.log(`✅ Admin Key: ${process.env.ADMIN_KEY ? 'Set' : 'Not Set'}`);
       console.log('\n📋 Available Endpoints:');
       console.log('├── GET  /health');
-      console.log('├── GET  /create?url=&slug=&title=&desc=');
-      console.log('├── POST /create (JSON body)');
+      console.log('├── GET  /new?url=&slug=&title=&desc=');
+      console.log('├── POST /new (JSON body)');
       console.log('├── GET  /r/:slug');
-      console.log('├── GET  /delete?slug=:slug');
+      console.log('├── GET  /delete.py?slug=:slug');
       console.log('├── GET  /linksdata?adminKey=:key');
       console.log('└── GET  /stats/:slug');
       console.log('\n🔧 Query Parameters:');
