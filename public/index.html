@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NsrSU — URL Shortener Service | NvLabs</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <link rel="icon" type="image/x-icon" href="https://nievexsviz.my.id/nv.ico">
+    <style>
+        * {
+            font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        
+        .neo-box {
+            border: 4px solid #000;
+            box-shadow: 8px 8px 0 #000;
+        }
+        
+        .neo-btn {
+            border: 3px solid #000;
+            box-shadow: 4px 4px 0 #000;
+            transition: all 0.2s;
+        }
+        
+        .neo-btn:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0 #000;
+        }
+        
+        .neo-btn:active {
+            transform: translate(4px, 4px);
+            box-shadow: 0 0 0 #000;
+        }
+        
+        .neo-input {
+            border: 3px solid #000;
+            box-shadow: inset 3px 3px 0 rgba(0,0,0,0.1);
+        }
+        
+        .neo-input:focus {
+            outline: none;
+            box-shadow: inset 3px 3px 0 rgba(0,0,0,0.2);
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .result-box {
+            animation: slideIn 0.3s ease-out;
+        }
+    </style>
+</head>
+<body class="bg-blue-300 min-h-screen p-4 md:p-8">
+    <div class="max-w-4xl mx-auto">
+        <!-- Header -->
+        <div class="neo-box bg-white p-6 mb-8">
+            <div class="flex items-center gap-4">
+                <span class="material-icons text-6xl">link</span>
+                <div>
+                    <h1 class="text-4xl md:text-5xl font-black uppercase">URL Shortener</h1>
+                    <p class="text-lg font-bold mt-1">Perpendek URL Anda dengan Mudah!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form -->
+        <div class="neo-box bg-white p-8 mb-8">
+            <form id="shortenerForm">
+                <div class="mb-6">
+                    <label class="block text-xl font-bold mb-3 uppercase">
+                        <span class="material-icons align-middle mr-2">language</span>
+                        URL Asli *
+                    </label>
+                    <input 
+                        type="url" 
+                        id="originalUrl" 
+                        class="neo-input w-full px-4 py-3 text-lg font-medium"
+                        placeholder="https://example.com/very/long/url"
+                        required
+                    >
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-xl font-bold mb-3 uppercase">
+                        <span class="material-icons align-middle mr-2">label</span>
+                        Custom Slug (Opsional)
+                    </label>
+                    <div class="flex items-center gap-2">
+                        <span class="text-lg font-bold text-gray-600">/r/</span>
+                        <input 
+                            type="text" 
+                            id="slug" 
+                            class="neo-input flex-1 px-4 py-3 text-lg font-medium"
+                            placeholder="my-custom-slug"
+                            pattern="[a-zA-Z0-9_-]*"
+                        >
+                    </div>
+                    <p class="text-sm font-bold text-gray-600 mt-2">* Kosongkan untuk slug otomatis</p>
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-xl font-bold mb-3 uppercase">
+                        <span class="material-icons align-middle mr-2">title</span>
+                        Judul (Opsional)
+                    </label>
+                    <input 
+                        type="text" 
+                        id="title" 
+                        class="neo-input w-full px-4 py-3 text-lg font-medium"
+                        placeholder="Judul untuk URL"
+                    >
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-xl font-bold mb-3 uppercase">
+                        <span class="material-icons align-middle mr-2">description</span>
+                        Deskripsi (Opsional)
+                    </label>
+                    <textarea 
+                        id="description" 
+                        class="neo-input w-full px-4 py-3 text-lg font-medium resize-none"
+                        rows="3"
+                        placeholder="Deskripsi singkat"
+                    ></textarea>
+                </div>
+
+                <button 
+                    type="submit" 
+                    id="submitBtn"
+                    class="neo-btn bg-cyan-400 w-full py-4 text-xl font-black uppercase flex items-center justify-center gap-2"
+                >
+                    <span class="material-icons">rocket_launch</span>
+                    Perpendek URL
+                </button>
+            </form>
+        </div>
+
+        <!-- Result -->
+        <div id="resultContainer" class="hidden">
+            <div class="neo-box bg-white p-8 mb-8 result-box">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="material-icons text-4xl text-green-600">check_circle</span>
+                    <h2 class="text-3xl font-black uppercase">Berhasil!</h2>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="neo-input bg-gray-50 p-4 flex items-center justify-between">
+                        <div class="flex-1 overflow-hidden">
+                            <p class="text-sm font-bold text-gray-600 mb-1">URL PENDEK</p>
+                            <a id="shortUrl" href="#" target="_blank" class="text-xl font-bold text-blue-600 hover:underline break-all"></a>
+                        </div>
+                        <button 
+                            onclick="copyUrl()"
+                            class="neo-btn bg-pink-400 px-4 py-2 ml-4 flex items-center gap-2 font-bold"
+                        >
+                            <span class="material-icons">content_copy</span>
+                            COPY
+                        </button>
+                    </div>
+
+                    <div class="neo-input bg-gray-50 p-4">
+                        <p class="text-sm font-bold text-gray-600 mb-1">SLUG</p>
+                        <p id="shortSlug" class="text-lg font-bold"></p>
+                    </div>
+
+                    <div id="titleDisplay" class="neo-input bg-gray-50 p-4 hidden">
+                        <p class="text-sm font-bold text-gray-600 mb-1">JUDUL</p>
+                        <p id="displayTitle" class="text-lg font-bold"></p>
+                    </div>
+
+                    <div id="descDisplay" class="neo-input bg-gray-50 p-4 hidden">
+                        <p class="text-sm font-bold text-gray-600 mb-1">DESKRIPSI</p>
+                        <p id="displayDesc" class="text-lg font-bold"></p>
+                    </div>
+                </div>
+
+                <button 
+                    onclick="resetForm()"
+                    class="neo-btn bg-yellow-400 w-full py-3 mt-6 text-lg font-black uppercase flex items-center justify-center gap-2"
+                >
+                    <span class="material-icons">refresh</span>
+                    Buat Link Baru
+                </button>
+            </div>
+
+            <!-- API Response -->
+            <div class="neo-box bg-gray-900 p-6 result-box">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="material-icons text-white text-2xl">code</span>
+                    <h3 class="text-xl font-black uppercase text-white">API Response</h3>
+                </div>
+                <pre><code id="apiResponse" class="language-json text-sm"></code></pre>
+            </div>
+        </div>
+
+        <!-- Loading -->
+        <div id="loadingBox" class="hidden neo-box bg-white p-8 text-center">
+            <div class="inline-block animate-spin material-icons text-6xl mb-4">autorenew</div>
+            <p class="text-2xl font-black uppercase">Memproses...</p>
+        </div>
+
+        <!-- Error -->
+        <div id="errorBox" class="hidden neo-box bg-red-400 p-6 mb-8">
+            <div class="flex items-center gap-3">
+                <span class="material-icons text-4xl">error</span>
+                <div>
+                    <h3 class="text-2xl font-black uppercase mb-1">Error!</h3>
+                    <p id="errorMessage" class="font-bold"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('shortenerForm');
+        const resultContainer = document.getElementById('resultContainer');
+        const loadingBox = document.getElementById('loadingBox');
+        const errorBox = document.getElementById('errorBox');
+        
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const url = document.getElementById('originalUrl').value;
+            const slug = document.getElementById('slug').value;
+            const title = document.getElementById('title').value;
+            const desc = document.getElementById('description').value;
+            
+            // Hide previous results
+            resultContainer.classList.add('hidden');
+            errorBox.classList.add('hidden');
+            loadingBox.classList.remove('hidden');
+            
+            try {
+                const params = new URLSearchParams({
+                    url: url,
+                    ...(slug && { slug: slug }),
+                    ...(title && { title: title }),
+                    ...(desc && { desc: desc })
+                });
+                
+                const response = await fetch(`/create.js?${params}`);
+                const data = await response.json();
+                
+                loadingBox.classList.add('hidden');
+                
+                if (data.success) {
+                    // Display results
+                    document.getElementById('shortUrl').href = data.data.shortUrl;
+                    document.getElementById('shortUrl').textContent = data.data.shortUrl;
+                    document.getElementById('shortSlug').textContent = data.data.shortSlug;
+                    
+                    // Show title if exists
+                    if (data.data.title) {
+                        document.getElementById('titleDisplay').classList.remove('hidden');
+                        document.getElementById('displayTitle').textContent = data.data.title;
+                    } else {
+                        document.getElementById('titleDisplay').classList.add('hidden');
+                    }
+                    
+                    // Show description if exists
+                    if (data.data.description) {
+                        document.getElementById('descDisplay').classList.remove('hidden');
+                        document.getElementById('displayDesc').textContent = data.data.description;
+                    } else {
+                        document.getElementById('descDisplay').classList.add('hidden');
+                    }
+                    
+                    // Display API response
+                    document.getElementById('apiResponse').textContent = JSON.stringify(data, null, 2);
+                    hljs.highlightElement(document.getElementById('apiResponse'));
+                    
+                    resultContainer.classList.remove('hidden');
+                } else {
+                    showError('Terjadi kesalahan saat memproses URL');
+                }
+            } catch (error) {
+                loadingBox.classList.add('hidden');
+                showError('Gagal terhubung ke server: ' + error.message);
+            }
+        });
+        
+        function copyUrl() {
+            const url = document.getElementById('shortUrl').textContent;
+            navigator.clipboard.writeText(url).then(() => {
+                const btn = event.target.closest('button');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<span class="material-icons">check</span>COPIED!';
+                btn.classList.remove('bg-pink-400');
+                btn.classList.add('bg-green-400');
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.classList.remove('bg-green-400');
+                    btn.classList.add('bg-pink-400');
+                }, 2000);
+            });
+        }
+        
+        function resetForm() {
+            form.reset();
+            resultContainer.classList.add('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        function showError(message) {
+            document.getElementById('errorMessage').textContent = message;
+            errorBox.classList.remove('hidden');
+            setTimeout(() => {
+                errorBox.classList.add('hidden');
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
