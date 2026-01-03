@@ -85,9 +85,12 @@ const validateSlug = (slug) => {
   return /^[a-zA-Z0-9_-]{3,50}$/.test(slug);
 };
 
+const minLength = 3;
+const maxLength = 5;
+
 const generateSlug = () => {
-  const slug = Math.floor(Math.random() * (8 - 5 + 1)) + 5;
-  return nanoid(slug);
+  const length = Math.floor(Math.random() * (maxLength - minLength + 1)) + minLength;
+  return nanoid(length);
 };
 
 /*
