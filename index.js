@@ -197,9 +197,9 @@ app.get('/new', apiLimiter, createUrlLimiter, async (req, res) => {
         createdAt: newUrl.createdAt
       },
       links: {
-	access: `${process.env.APP_DOMAIN}/r/${shortSlug}`,
-	delete: `${process.env.APP_DOMAIN}/delete.py?slug=${shortSlug}`,
-	stats: `${process.env.APP_DOMAIN}/stats/${shortSlug}`,
+        access: `${process.env.APP_DOMAIN}/r/${shortSlug}`,
+        delete: `${process.env.APP_DOMAIN}/delete.py?slug=${shortSlug}`,
+        stats: `${process.env.APP_DOMAIN}/stats/${shortSlug}`,
         qrCode: `https://nvlabs.my.id/nv/canvas/qrgen?text=https%3A%2F%2Fnsu.my.id%2Fr%2F${shortSlug}&margin=1&size=400&format=png&color=%23000000&bgcolor=%23FFFFFF&`
       }
     });
@@ -293,15 +293,21 @@ app.post('/new', apiLimiter, createUrlLimiter, async (req, res) => {
     
     await newUrl.save();
     
-    res.status(201).json({
+    res.json({
       success: true,
       data: {
         originalUrl: url,
         shortUrl: `${process.env.APP_DOMAIN}/r/${shortSlug}`,
         shortSlug,
         title: title || '',
-        description: description || '',
+        description: desc || '',
         createdAt: newUrl.createdAt
+      },
+      links: {
+        access: `${process.env.APP_DOMAIN}/r/${shortSlug}`,
+        delete: `${process.env.APP_DOMAIN}/delete.py?slug=${shortSlug}`,
+        stats: `${process.env.APP_DOMAIN}/stats/${shortSlug}`,
+        qrCode: `https://nvlabs.my.id/nv/canvas/qrgen?text=https%3A%2F%2Fnsu.my.id%2Fr%2F${shortSlug}&margin=1&size=400&format=png&color=%23000000&bgcolor=%23FFFFFF&`
       }
     });
     
@@ -402,13 +408,13 @@ app.get('/delete.py', apiLimiter, async (req, res) => {
 // Get All Links Data (Admin Only)
 app.get('/linksdata', apiLimiter, requireAdmin, async (req, res) => {
   try {
-    const { 
-      page = 1, 
-      limit = 100, 
-      sort = 'createdAt', 
-      order = 'desc',
-      search = '',
-      active = 'true'
+    const {
+      page = 1,
+        limit = 100,
+        sort = 'createdAt',
+        order = 'desc',
+        search = '',
+        active = 'true'
     } = req.query;
     
     const pageNum = parseInt(page);
@@ -438,7 +444,9 @@ app.get('/linksdata', apiLimiter, requireAdmin, async (req, res) => {
     
     // Get data with pagination
     const urls = await Url.find(query)
-      .sort({ [sort]: order === 'desc' ? -1 : 1 })
+      .sort({
+        [sort]: order === 'desc' ? -1 : 1
+      })
       .skip(skip)
       .limit(limitNum)
       .lean();
