@@ -112,7 +112,7 @@ app.get('/health', (req, res) => {
     creator: "Nv",
     message: 'URL Shortener API is running',
     timestamp: new Date().toISOString(),
-    version: '1.0.0'
+    version: '1.3.0'
   });
 });
 
@@ -202,7 +202,7 @@ app.get('/new', apiLimiter, createUrlLimiter, async (req, res) => {
         access: `${process.env.APP_DOMAIN}/r/${shortSlug}`,
         delete: `${process.env.APP_DOMAIN}/delete.py?slug=${shortSlug}`,
         stats: `${process.env.APP_DOMAIN}/stats/${shortSlug}`,
-        qrCode: `https://nvlabs.my.id/nv/canvas/qrgen?text=https%3A%2F%2Fnsu.my.id%2Fr%2F${shortSlug}&margin=1&size=400&format=png&color=%23000000&bgcolor=%23FFFFFF&`
+        qrCode: `https://api.vandecim.web.id/nv/canvas/qrgen?text=https%3A%2F%2Fnsu.my.id%2Fr%2F${shortSlug}&margin=1&size=400&format=png&color=%23000000&bgcolor=%23FFFFFF&`
       }
     });
     
@@ -309,7 +309,7 @@ app.post('/new', apiLimiter, createUrlLimiter, async (req, res) => {
         access: `${process.env.APP_DOMAIN}/r/${shortSlug}`,
         delete: `${process.env.APP_DOMAIN}/delete.py?slug=${shortSlug}`,
         stats: `${process.env.APP_DOMAIN}/stats/${shortSlug}`,
-        qrCode: `https://nvlabs.my.id/nv/canvas/qrgen?text=https%3A%2F%2Fnsu.my.id%2Fr%2F${shortSlug}&margin=1&size=400&format=png&color=%23000000&bgcolor=%23FFFFFF&`
+        qrCode: `https://api.vandecim.web.id/nv/canvas/qrgen?text=https%3A%2F%2Fnsu.my.id%2Fr%2F${shortSlug}&margin=1&size=400&format=png&color=%23000000&bgcolor=%23FFFFFF&`
       }
     });
     

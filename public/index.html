@@ -14,35 +14,54 @@
             font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
         }
         
+        body {
+            background: #FFF4E6;
+        }
+        
         .neo-box {
             border: 4px solid #000;
             box-shadow: 8px 8px 0 #000;
+            background: white;
         }
         
         .neo-btn {
-            border: 3px solid #000;
-            box-shadow: 4px 4px 0 #000;
+            border: 4px solid #000;
+            box-shadow: 6px 6px 0 #000;
             transition: all 0.2s;
+            font-weight: 900;
         }
         
         .neo-btn:hover {
-            transform: translate(2px, 2px);
-            box-shadow: 2px 2px 0 #000;
+            transform: translate(3px, 3px);
+            box-shadow: 3px 3px 0 #000;
         }
         
         .neo-btn:active {
-            transform: translate(4px, 4px);
+            transform: translate(6px, 6px);
             box-shadow: 0 0 0 #000;
         }
         
         .neo-input {
             border: 3px solid #000;
-            box-shadow: inset 3px 3px 0 rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            font-weight: 600;
         }
         
         .neo-input:focus {
             outline: none;
-            box-shadow: inset 3px 3px 0 rgba(0,0,0,0.2);
+            box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.3);
+        }
+        
+        .green-bg {
+            background: #22C55E;
+        }
+        
+        .light-green-bg {
+            background: #86EFAC;
+        }
+        
+        .lightest-green-bg {
+            background: #DCFCE7;
         }
         
         @keyframes slideIn {
@@ -59,172 +78,284 @@
         .result-box {
             animation: slideIn 0.3s ease-out;
         }
+        
+        .skill-badge {
+            border: 3px solid #000;
+            padding: 1rem 1.5rem;
+            font-weight: 800;
+            font-size: 1rem;
+            background: white;
+            box-shadow: 4px 4px 0 #000;
+            transition: all 0.2s;
+        }
+        
+        .skill-badge:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0 #000;
+        }
+        
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            border: 3px solid #000;
+            padding: 0.5rem 1.5rem;
+            font-weight: 900;
+            background: white;
+            box-shadow: 4px 4px 0 #000;
+        }
     </style>
 </head>
-<body class="bg-blue-300 min-h-screen p-4 md:p-8">
-    <div class="max-w-4xl mx-auto">
+<body class="min-h-screen p-4 md:p-8">
+    <div class="max-w-5xl mx-auto">
         <!-- Header -->
-        <div class="neo-box bg-white p-6 mb-8">
-            <div class="flex items-center gap-4">
-                <span class="material-icons text-6xl">link</span>
-                <div>
-                    <h1 class="text-4xl md:text-5xl font-black uppercase">URL Shortener</h1>
-                    <p class="text-lg font-bold mt-1">Perpendek URL Anda dengan Mudah!</p>
-                </div>
+        <div class="text-center mb-8">
+            <div class="inline-block header-badge mb-6">
+                <span class="material-icons mr-2">link</span>
+                NvLabs Tools
             </div>
+            <h1 class="text-6xl md:text-7xl font-black mb-4">
+                I'M <span class="green-bg px-4 py-2" style="display: inline-block;">URL SHORTENER.</span>
+            </h1>
+            <p class="text-2xl font-black mb-8">FAST & SIMPLE SERVICE</p>
         </div>
 
-        <!-- Form -->
-        <div class="neo-box bg-white p-8 mb-8">
+        <!-- Main Content -->
+        <div class="neo-box p-8 md:p-12 mb-8 lightest-green-bg">
+            <div class="mb-8">
+                <h2 class="text-3xl font-black mb-4">Hello! Welcome to NsrSU 👋</h2>
+                <p class="text-lg font-semibold leading-relaxed">
+                    Perpendek URL panjang Anda menjadi link yang mudah dibagikan. Layanan gratis, cepat, dan aman untuk semua kebutuhan Anda. Buat custom slug atau biarkan sistem generate otomatis untuk Anda!
+                </p>
+            </div>
+
+            <!-- Stats -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div class="neo-box p-6 bg-white">
+                    <div class="flex items-center gap-4">
+                        <div class="text-5xl font-black">⚡</div>
+                        <div>
+                            <div class="text-3xl font-black">INSTANT</div>
+                            <div class="text-sm font-bold">Processing Speed</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="neo-box p-6 bg-white">
+                    <div class="flex items-center gap-4">
+                        <div class="text-5xl font-black">🔒</div>
+                        <div>
+                            <div class="text-3xl font-black">SECURE</div>
+                            <div class="text-sm font-bold">Safe & Encrypted</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <form id="shortenerForm">
                 <div class="mb-6">
-                    <label class="block text-xl font-bold mb-3 uppercase">
-                        <span class="material-icons align-middle mr-2">language</span>
-                        URL Asli *
+                    <label class="block text-xl font-black mb-3 uppercase">
+                        Original URL *
                     </label>
                     <input 
                         type="url" 
                         id="originalUrl" 
-                        class="neo-input w-full px-4 py-3 text-lg font-medium"
+                        class="neo-input w-full px-4 py-4 text-lg bg-white"
                         placeholder="https://example.com/very/long/url"
                         required
                     >
                 </div>
 
                 <div class="mb-6">
-                    <label class="block text-xl font-bold mb-3 uppercase">
-                        <span class="material-icons align-middle mr-2">label</span>
-                        Custom Slug (Opsional)
+                    <label class="block text-xl font-black mb-3 uppercase">
+                        Custom Slug (Optional)
                     </label>
-                    <div class="flex items-center gap-2">
-                        <span class="text-lg font-bold text-gray-600">nsu.my.id/r/</span>
+                    <div class="flex items-stretch gap-3">
+                        <div class="neo-input bg-gray-100 px-4 py-4 text-lg font-black flex items-center">
+                            nsu.my.id/r/
+                        </div>
                         <input 
                             type="text" 
                             id="slug" 
-                            class="neo-input flex-1 px-4 py-3 text-lg font-medium"
+                            class="neo-input flex-1 px-4 py-4 text-lg bg-white"
                             placeholder="my-custom-slug"
                             pattern="[a-zA-Z0-9_-]*"
                         >
                     </div>
-                    <p class="text-sm font-bold text-gray-600 mt-2">* Kosongkan untuk slug otomatis</p>
                 </div>
 
                 <div class="mb-6">
-                    <label class="block text-xl font-bold mb-3 uppercase">
-                        <span class="material-icons align-middle mr-2">title</span>
-                        Judul (Opsional)
+                    <label class="block text-xl font-black mb-3 uppercase">
+                        Title (Optional)
                     </label>
                     <input 
                         type="text" 
                         id="title" 
-                        class="neo-input w-full px-4 py-3 text-lg font-medium"
-                        placeholder="Judul untuk URL"
+                        class="neo-input w-full px-4 py-4 text-lg bg-white"
+                        placeholder="Enter title for your URL"
                     >
                 </div>
 
-                <div class="mb-6">
-                    <label class="block text-xl font-bold mb-3 uppercase">
-                        <span class="material-icons align-middle mr-2">description</span>
-                        Deskripsi (Opsional)
+                <div class="mb-8">
+                    <label class="block text-xl font-black mb-3 uppercase">
+                        Description (Optional)
                     </label>
                     <textarea 
                         id="description" 
-                        class="neo-input w-full px-4 py-3 text-lg font-medium resize-none"
-                        rows="3"
-                        placeholder="Deskripsi singkat"
+                        class="neo-input w-full px-4 py-4 text-lg resize-none bg-white"
+                        rows="4"
+                        placeholder="Brief description"
                     ></textarea>
                 </div>
 
                 <button 
                     type="submit" 
                     id="submitBtn"
-                    class="neo-btn bg-cyan-400 w-full py-4 text-xl font-black uppercase flex items-center justify-center gap-2"
+                    class="neo-btn green-bg w-full py-5 text-2xl flex items-center justify-center gap-3 uppercase"
                 >
-                    <span class="material-icons">rocket_launch</span>
-                    Perpendek URL
+                    <span class="material-icons text-3xl">rocket_launch</span>
+                    Shorten URL Now
                 </button>
             </form>
         </div>
 
-        <!-- Result -->
+        <!-- Result Section -->
         <div id="resultContainer" class="hidden">
-            <div class="neo-box bg-white p-8 mb-8 result-box">
-                <div class="flex items-center gap-3 mb-6">
-                    <span class="material-icons text-4xl text-green-600">check_circle</span>
-                    <h2 class="text-3xl font-black uppercase">Berhasil!</h2>
+            <div class="neo-box green-bg p-8 md:p-12 mb-8 result-box">
+                <div class="mb-8">
+                    <div class="inline-block header-badge mb-4">
+                        <span class="material-icons text-green-600 mr-2">check_circle</span>
+                        Success
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-black mb-4">YOUR SHORTENED URL</h2>
+                    <p class="text-lg font-bold">Link berhasil dibuat! Salin dan bagikan sekarang.</p>
                 </div>
 
                 <div class="space-y-4">
-                    <div class="neo-input bg-gray-50 p-4 flex items-center justify-between">
-                        <div class="flex-1 overflow-hidden">
-                            <p class="text-sm font-bold text-gray-600 mb-1">URL PENDEK</p>
-                            <a id="shortUrl" href="#" target="_blank" class="text-xl font-bold text-blue-600 hover:underline break-all"></a>
+                    <div class="neo-box bg-white p-6">
+                        <div class="flex flex-col md:flex-row md:items-center gap-4">
+                            <div class="flex-1">
+                                <div class="text-sm font-black mb-2">SHORT URL</div>
+                                <a id="shortUrl" href="#" target="_blank" class="text-xl md:text-2xl font-black text-blue-600 hover:text-blue-800 break-all"></a>
+                            </div>
+                            <button 
+                                onclick="copyUrl()"
+                                class="neo-btn bg-black text-white px-8 py-4 flex items-center justify-center gap-2"
+                            >
+                                <span class="material-icons">content_copy</span>
+                                COPY
+                            </button>
                         </div>
-                        <button 
-                            onclick="copyUrl()"
-                            class="neo-btn bg-pink-400 px-4 py-2 ml-4 flex items-center gap-2 font-bold"
-                        >
-                            <span class="material-icons">content_copy</span>
-                            COPY
-                        </button>
                     </div>
 
-                    <div class="neo-input bg-gray-50 p-4">
-                        <p class="text-sm font-bold text-gray-600 mb-1">SLUG</p>
-                        <p id="shortSlug" class="text-lg font-bold"></p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="neo-box bg-white p-6">
+                            <div class="text-sm font-black mb-2">SLUG</div>
+                            <div id="shortSlug" class="text-xl font-black"></div>
+                        </div>
+
+                        <div id="titleDisplay" class="neo-box bg-white p-6 hidden">
+                            <div class="text-sm font-black mb-2">TITLE</div>
+                            <div id="displayTitle" class="text-xl font-black"></div>
+                        </div>
                     </div>
 
-                    <div id="titleDisplay" class="neo-input bg-gray-50 p-4 hidden">
-                        <p class="text-sm font-bold text-gray-600 mb-1">JUDUL</p>
-                        <p id="displayTitle" class="text-lg font-bold"></p>
-                    </div>
-
-                    <div id="descDisplay" class="neo-input bg-gray-50 p-4 hidden">
-                        <p class="text-sm font-bold text-gray-600 mb-1">DESKRIPSI</p>
-                        <p id="displayDesc" class="text-lg font-bold"></p>
+                    <div id="descDisplay" class="neo-box bg-white p-6 hidden">
+                        <div class="text-sm font-black mb-2">DESCRIPTION</div>
+                        <div id="displayDesc" class="text-lg font-semibold"></div>
                     </div>
                 </div>
 
                 <button 
                     onclick="resetForm()"
-                    class="neo-btn bg-yellow-400 w-full py-3 mt-6 text-lg font-black uppercase flex items-center justify-center gap-2"
+                    class="neo-btn bg-white w-full py-4 mt-6 text-xl flex items-center justify-center gap-2 uppercase"
                 >
                     <span class="material-icons">refresh</span>
-                    Buat Link Baru
+                    Create New Link
                 </button>
             </div>
 
             <!-- API Response -->
-            <div class="neo-box bg-gray-900 p-6 result-box">
-                <div class="flex items-center gap-3 mb-4">
-                    <span class="material-icons text-white text-2xl">code</span>
-                    <h3 class="text-xl font-black uppercase text-white">API Response</h3>
+            <div class="neo-box bg-gray-900 p-6 md:p-8 result-box">
+                <div class="mb-4">
+                    <div class="inline-block header-badge mb-4">
+                        <span class="material-icons mr-2">code</span>
+                        API Response
+                    </div>
                 </div>
-                <pre><code id="apiResponse" class="language-json text-sm"></code></pre>
+                <div class="neo-input bg-black p-4">
+                    <pre><code id="apiResponse" class="language-json text-sm"></code></pre>
+                </div>
             </div>
         </div>
 
         <!-- Loading -->
-        <div id="loadingBox" class="hidden neo-box bg-white p-8 text-center">
+        <div id="loadingBox" class="hidden neo-box light-green-bg p-12 text-center">
             <div class="inline-block animate-spin material-icons text-6xl mb-4">autorenew</div>
-            <p class="text-2xl font-black uppercase">Memproses...</p>
+            <p class="text-3xl font-black">PROCESSING...</p>
+            <p class="text-lg font-bold mt-2">Please wait a moment</p>
         </div>
 
         <!-- Error -->
-        <div id="errorBox" class="hidden neo-box bg-red-400 p-6 mb-8">
-            <div class="flex items-center gap-3">
-                <span class="material-icons text-4xl">error</span>
+        <div id="errorBox" class="hidden neo-box bg-red-400 p-8 mb-8 result-box">
+            <div class="flex items-center gap-4">
+                <span class="material-icons text-6xl">error</span>
                 <div>
-                    <h3 class="text-2xl font-black uppercase mb-1">Error!</h3>
-                    <p id="errorMessage" class="font-bold"></p>
+                    <h3 class="text-3xl font-black mb-2">ERROR!</h3>
+                    <p id="errorMessage" class="text-lg font-bold"></p>
                 </div>
             </div>
         </div>
 
-	<div class="text-center overflow-hidden mt-4">
-	  <p class="text-center text-xl font-extrabold hover:text-blue-500 overflow-hidden mb-2"><a href="https://nvlabs.my.id">2026 NvLabs</a></p>
-	  <p class="text-center text-sm hover:text-blue-500 overflow-hidden"><a href="https://github.com/ShinWolf-Subject/nvrsux.git">Open Source</a></p>
-	</div>
+        <!-- Features Section -->
+        <div class="neo-box green-bg p-8 md:p-12 mb-8">
+            <div class="text-center mb-8">
+                <div class="inline-block header-badge mb-4">
+                    <span class="material-icons mr-2">auto_awesome</span>
+                    Features
+                </div>
+                <h2 class="text-4xl font-black">WHY USE NSRSU?</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="skill-badge text-center">
+                    <div class="text-3xl mb-2">⚡</div>
+                    <div class="font-black">Lightning Fast</div>
+                </div>
+                <div class="skill-badge text-center">
+                    <div class="text-3xl mb-2">🎯</div>
+                    <div class="font-black">Custom Slugs</div>
+                </div>
+                <div class="skill-badge text-center">
+                    <div class="text-3xl mb-2">📊</div>
+                    <div class="font-black">API Access</div>
+                </div>
+                <div class="skill-badge text-center">
+                    <div class="text-3xl mb-2">🔒</div>
+                    <div class="font-black">Secure Links</div>
+                </div>
+                <div class="skill-badge text-center">
+                    <div class="text-3xl mb-2">💰</div>
+                    <div class="font-black">Free Forever</div>
+                </div>
+                <div class="skill-badge text-center">
+                    <div class="text-3xl mb-2">🚀</div>
+                    <div class="font-black">Easy to Use</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center py-8">
+            <div class="inline-block neo-box bg-black text-white px-8 py-4 mb-4">
+                <p class="text-2xl font-black">
+                    <a href="https://nvlabs.my.id" class="hover:text-green-400 transition-colors">2026 NvLabs</a>
+                </p>
+            </div>
+            <br>
+            <a href="https://github.com/ShinWolf-Subject/nvrsux.git" class="text-lg font-bold hover:text-green-600 transition-colors inline-flex items-center gap-2">
+                <span class="material-icons">code</span>
+                Open Source on GitHub
+            </a>
+        </div>
     </div>
 
     <script>
@@ -241,7 +372,6 @@
             const title = document.getElementById('title').value;
             const desc = document.getElementById('description').value;
             
-            // Hide previous results
             resultContainer.classList.add('hidden');
             errorBox.classList.add('hidden');
             loadingBox.classList.remove('hidden');
@@ -260,12 +390,10 @@
                 loadingBox.classList.add('hidden');
                 
                 if (data.success) {
-                    // Display results
                     document.getElementById('shortUrl').href = data.data.shortUrl;
                     document.getElementById('shortUrl').textContent = data.data.shortUrl;
                     document.getElementById('shortSlug').textContent = data.data.shortSlug;
                     
-                    // Show title if exists
                     if (data.data.title) {
                         document.getElementById('titleDisplay').classList.remove('hidden');
                         document.getElementById('displayTitle').textContent = data.data.title;
@@ -273,7 +401,6 @@
                         document.getElementById('titleDisplay').classList.add('hidden');
                     }
                     
-                    // Show description if exists
                     if (data.data.description) {
                         document.getElementById('descDisplay').classList.remove('hidden');
                         document.getElementById('displayDesc').textContent = data.data.description;
@@ -281,11 +408,11 @@
                         document.getElementById('descDisplay').classList.add('hidden');
                     }
                     
-                    // Display API response
                     document.getElementById('apiResponse').textContent = JSON.stringify(data, null, 2);
                     hljs.highlightElement(document.getElementById('apiResponse'));
                     
                     resultContainer.classList.remove('hidden');
+                    resultContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 } else {
                     showError('Terjadi kesalahan saat memproses URL');
                 }
@@ -299,15 +426,15 @@
             const url = document.getElementById('shortUrl').textContent;
             navigator.clipboard.writeText(url).then(() => {
                 const btn = event.target.closest('button');
-                const originalText = btn.innerHTML;
+                const originalHTML = btn.innerHTML;
                 btn.innerHTML = '<span class="material-icons">check</span>COPIED!';
-                btn.classList.remove('bg-pink-400');
-                btn.classList.add('bg-green-400');
+                btn.classList.remove('bg-black');
+                btn.classList.add('bg-green-600');
                 
                 setTimeout(() => {
-                    btn.innerHTML = originalText;
-                    btn.classList.remove('bg-green-400');
-                    btn.classList.add('bg-pink-400');
+                    btn.innerHTML = originalHTML;
+                    btn.classList.remove('bg-green-600');
+                    btn.classList.add('bg-black');
                 }, 2000);
             });
         }
@@ -321,6 +448,7 @@
         function showError(message) {
             document.getElementById('errorMessage').textContent = message;
             errorBox.classList.remove('hidden');
+            errorBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
             setTimeout(() => {
                 errorBox.classList.add('hidden');
             }, 5000);
